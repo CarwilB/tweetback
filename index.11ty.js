@@ -269,7 +269,10 @@ class Index extends Twitter {
 				<div class="tweets-search">
 					<div id="search" class="tweets-search"></div>
 					<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
-					<script src="/pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#search', showImages: false });"></script>
+					<script src="/pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#search', showImages: false, processResult: function (result) {
+					  result.url = '/twitter/' + result.url;
+                      return result;
+					} });"></script>
 				</div>
 			</template>
 		</is-land>
