@@ -62,11 +62,11 @@ ${metadata.username}'s Twitter Archive
 <li><a href="/popular/">Popular Tweets</a></li>
 </ul>
 <div style="margin-top: 1rem;">
-<strong style="font-size: 0.9em; display: block; margin-bottom: 0.5rem;">Browse recent tweet pages:</strong>
+<strong style="font-size: 0.9em; display: block; margin-bottom: 0.5rem;">Browse popular tweet pages:</strong>
 <div class="sidebar-pagination">
-${Array.from({length: 25}, (_, i) => {
+${Array.from({length: 10}, (_, i) => {
 	let pageNum = i + 1;
-	let url = pageNum === 1 ? '/recent/' : `/recent/${pageNum}/`;
+	let url = pageNum === 1 ? '/recent/' : `/popular/${pageNum}/`;
 	return `<a href="${url}"${pageNum === data.pagination.pageNumber + 1 ? ' class="current"' : ''}>${pageNum}</a>`;
 }).join(' ')}
 </div>
