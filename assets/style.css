@@ -5,18 +5,116 @@ html {
 	height: 100%;
 }
 body {
-	max-width: 60em;
 	min-height: 100%;
 	font-family: system-ui, sans-serif;
-	margin: 0 auto;
-	padding: .5em;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: row;
+}
+@media (max-width: 48em) { /* 768px */
+	body {
+		flex-direction: column;
+	}
+}
+
+/* Sidebar Layout */
+.sidebar {
+	width: 20rem;
+	min-width: 20rem;
+	max-width: 20rem;
+	background-color: #f5f5f5;
+	border-right: 2px solid #ddd;
+	padding: 1rem;
+	overflow-y: auto;
+	position: sticky;
+	top: 0;
+	height: 100vh;
+}
+@media (max-width: 48em) { /* 768px */
+	.sidebar {
+		width: 100%;
+		max-width: 100%;
+		min-width: 100%;
+		position: static;
+		height: auto;
+		border-right: none;
+		border-bottom: 2px solid #ddd;
+	}
+}
+.main-content {
+	flex: 1;
+	overflow-y: auto;
+	padding: 1rem 2rem;
+	max-width: 60em;
+}
+@media (max-width: 48em) { /* 768px */
+	.main-content {
+		padding: 1rem;
+	}
+}
+
+/* Sidebar specific styles */
+.sidebar .tweets-title {
+	font-size: 1.1em;
+	margin-bottom: 1rem;
+	display: block;
+}
+.sidebar .tweets-nav {
+	display: block;
+	margin-bottom: 1.5rem;
+}
+.sidebar .tweets-nav li {
+	display: block;
+	margin-bottom: 0.5rem;
+}
+.sidebar .sidebar-section {
+	margin-bottom: 2rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid #ddd;
+}
+.sidebar .sidebar-section:last-child {
+	border-bottom: none;
+}
+.sidebar h2 {
+	font-size: 1rem;
+	margin: 0 0 0.5rem 0;
+	font-weight: 600;
+}
+.sidebar .tweets-search {
+	margin: 1rem 0;
+	font-size: 1rem;
+}
+.sidebar .sidebar-nav-list {
+	list-style: none;
+	padding: 0;
+	font-size: 0.9em;
+	margin: 0;
+}
+.sidebar .sidebar-nav-list li {
+	margin-bottom: 0.5rem;
+}
+.sidebar .sidebar-pagination {
+	font-size: 0.85em;
+	line-height: 1.8;
+}
+.sidebar .sidebar-pagination a {
+	display: inline-block;
+	padding: 0.15rem 0.3rem;
+	margin: 0 0.1rem;
+	text-decoration: none;
+	border-radius: 3px;
+}
+.sidebar .sidebar-pagination a:hover {
+	background-color: #e0e0e0;
 }
 footer {
 	font-size: 0.875em; /* 14px /16 */
-	margin-top: 1em;
+	margin-top: 2em;
 	border-top: 1px solid #eee;
 	padding: 1em 0 0;
 	font-style: italic;
+	width: 100%;
 }
 :link,
 :visited {
@@ -103,8 +201,8 @@ button {
 }
 .tweets-primary-count {
 	font-size: 4em;
-	margin: 2em 0 1em;
-	padding: 0 0 2em;
+	margin: 0.5em 0 0.5em;
+	padding: 0 0 0.5em;
 	text-align: center;
 	border-bottom: 2px solid #eee;
 	font-weight: 400;
@@ -116,7 +214,7 @@ button {
 /* Tweet list */
 .tweets {
 	max-width: 40em;
-	margin: 4em auto;
+	margin: 2em auto;
 	padding: 0;
 }
 .tweets .tweets-replies {
