@@ -33,13 +33,23 @@ class Recent extends Twitter {
 		let startTweet = (data.pagination.pageNumber * data.pagination.size) + 1;
 		let endTweet = Math.min((data.pagination.pageNumber + 1) * data.pagination.size, totalTweets);
 
+		// Navigation links
+		let previousHref = data.pagination.previousPageHref;
+		let nextHref = data.pagination.nextPageHref;
+		let navHtml = `<p class="tweets-pagination">
+			${previousHref ? `<a href="${previousHref}">← Newer tweets</a>` : '<span>← Newer tweets</span>'}
+			${nextHref ? `<a href="${nextHref}">Older tweets →</a>` : '<span>Older tweets →</span>'}
+		</p>`;
+
 		return `<h2>Most Recent Tweets (Page ${pageNum} of ${totalPages})</h2>
 		<p>Not including replies or retweets or mentions. Showing tweets ${startTweet}-${endTweet} of ${totalTweets}.</p>
+		${navHtml}
 
 		<h3>Tweets</h3>
 		<ol class="tweets tweets-linear-list h-feed hfeed">
 			${tweetHtml.join("")}
-		</ol>`;
+		</ol>
+		${navHtml}`;
 	}
 }
 
