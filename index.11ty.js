@@ -279,6 +279,11 @@ class Index extends Twitter {
 
 		<div>
 			<h2><a href="/recent/">Recent:</a></h2>
+			<p>Browse pages of recent tweets: ${Array.from({length: 25}, (_, i) => {
+				let pageNum = i + 1;
+				let url = pageNum === 1 ? '/recent/' : `/recent/${pageNum}/`;
+				return `<a href="${url}">${pageNum}</a>`;
+			}).join(' | ')}</p>
 
 			<ol class="tweets tweets-linear-list h-feed hfeed" id="tweets-recent-home">
 				${recentTweetsHtml.join("")}
