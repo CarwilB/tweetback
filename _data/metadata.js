@@ -4,6 +4,7 @@ let data = {
 	homeUrl: "https://carwilb.github.io/",
 };
 
-data.avatar = `https://v1.indieweb-avatar.11ty.dev/${encodeURIComponent(data.homeUrl)}/`;
+// Use a local image instead of external service
+data.avatar = `/assets/avatar.jpg`;
 
 module.exports = data;
