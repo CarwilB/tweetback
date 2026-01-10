@@ -4,3 +4,4 @@ _site
 .env
 package-lock.json
 .DS_Store
+.DS_Store
