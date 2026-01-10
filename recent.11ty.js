@@ -30,8 +30,8 @@ class Recent extends Twitter {
 		let pageNum = data.pagination.pageNumber + 1;
 		let totalTweets = data.recentTweets.length;
 		let totalPages = Math.ceil(totalTweets / data.pagination.size);
-		let startTweet = (data.pagination.pageNumber * 40) + 1;
-		let endTweet = Math.min((data.pagination.pageNumber + 1) * 40, totalTweets);
+		let startTweet = (data.pagination.pageNumber * data.pagination.size) + 1;
+		let endTweet = Math.min((data.pagination.pageNumber + 1) * data.pagination.size, totalTweets);
 
 		return `<h2>Most Recent Tweets (Page ${pageNum} of ${totalPages})</h2>
 		<p>Not including replies or retweets or mentions. Showing tweets ${startTweet}-${endTweet} of ${totalTweets}.</p>
