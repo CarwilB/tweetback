@@ -289,16 +289,26 @@ ${metadata.username}'s Twitter Archive
 
 <div class="sidebar-section">
 <h2>Navigation</h2>
-<ul class="tweets-nav">
+<ul class="sidebar-nav-list">
 <li><a rel="home" href="${metadata.homeUrl}">← ${metadata.homeLabel}</a></li>
 <li><a href="/recent/">Recent Tweets</a></li>
 <li><a href="/popular/">Popular Tweets</a></li>
 </ul>
+<div style="margin-top: 1rem;">
+<strong style="font-size: 0.9em; display: block; margin-bottom: 0.5rem;">Browse recent tweet pages:</strong>
+<div class="sidebar-pagination">
+${Array.from({length: 25}, (_, i) => {
+	let pageNum = i + 1;
+	let url = pageNum === 1 ? '/recent/' : `/recent/${pageNum}/`;
+	return `<a href="${url}">${pageNum}</a>`;
+}).join(' ')}
+</div>
+</div>
 </div>
 
 <div class="sidebar-section">
 <h2>Statistics</h2>
-<ul style="list-style: none; padding: 0; font-size: 0.9em;">
+<ul class="sidebar-nav-list">
 <li><strong>${this.renderNumber(tweetCount)}</strong> total tweets</li>
 <li><strong>${this.renderPercentage(retweetCount, tweetCount)}</strong> retweets</li>
 <li><strong>${this.renderPercentage(replyCount, tweetCount)}</strong> replies</li>
@@ -309,7 +319,7 @@ ${metadata.username}'s Twitter Archive
 
 <div class="sidebar-section">
 <h2>Quick Links</h2>
-<ul style="list-style: none; padding: 0; font-size: 0.9em;">
+<ul class="sidebar-nav-list">
 <li><a href="#retweets">Retweets</a></li>
 <li><a href="#replies">Replies & Mentions</a></li>
 <li><a href="#links">Most Linked Sites</a></li>
@@ -326,11 +336,6 @@ ${metadata.username}'s Twitter Archive
 
 		<div>
 			<h2><a href="/recent/">Recent:</a></h2>
-			<p>Browse pages of recent tweets: ${Array.from({length: 25}, (_, i) => {
-				let pageNum = i + 1;
-				let url = pageNum === 1 ? '/recent/' : `/recent/${pageNum}/`;
-				return `<a href="${url}">${pageNum}</a>`;
-			}).join(' | ')}</p>
 
 			<ol class="tweets tweets-linear-list h-feed hfeed" id="tweets-recent-home">
 				${recentTweetsHtml.join("")}

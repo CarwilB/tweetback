@@ -95,11 +95,11 @@ module.exports = async function(data) {
 			${!data.hideHeaderTweetsLink ? `<ul class="tweets-nav">
 				<li><a rel="home" href="${data.metadata.homeUrl}">← ${data.metadata.homeLabel}</a></li>
 			</ul>`: ""}
-			${navHtml}
 		</header>
 		<main>
 			${data.content}
 		</main>
+		${navHtml}
 		<footer>
 			<p>An open source project from <a href="https://github.com/tweetback">tweetback</a>.</p>
 		</footer>
