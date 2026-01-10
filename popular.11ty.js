@@ -36,12 +36,12 @@ class Popular extends Twitter {
 		let previousHref = data.pagination.previousPageHref;
 		let nextHref = data.pagination.nextPageHref;
 		let navHtml = `<p class="tweets-pagination">
-			${previousHref ? `<a href="${previousHref}">← More popular tweets</a>` : '<span>← More popular tweets</span>'}
-			${nextHref ? `<a href="${nextHref}">Less popular tweets →</a>` : '<span>Less popular tweets →</span>'}
+			${previousHref ? `<a href="${previousHref}">← More popular</a>` : '<span>← More popular</span>'}
+			${nextHref ? `<a href="${nextHref}">Less popular →</a>` : '<span>Less popular →</span>'}
 		</p>`;
 
 		return `<h2>Most Popular Tweets (Page ${pageNum} of ${totalPages})</h2>
-		<p>A list of popular tweets by retweets and favorites. Showing tweets ${startTweet}-${endTweet} of ${totalTweets}.</p>
+		<p>Sorted by like and retweet counts. Showing tweets ${startTweet}-${endTweet} of ${totalTweets}.</p>
 		${navHtml}
 
 		<h3>Tweets</h3>
