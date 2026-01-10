@@ -1,5 +1,6 @@
 const dataSource = require("../src/DataSource");
 const metadata = require("../_data/metadata.js");
+const header = require("./header.11ty.js");
 
 module.exports = async function(data) {
 	let titleTweetNumberStr = "";
@@ -38,6 +39,9 @@ module.exports = async function(data) {
 
 	// Check if this is the index page and should use sidebar layout
 	const isIndexPage = data.page.url === "/" || data.page.fileSlug === "index.11ty" || data.page.fileSlug === "index";
+	
+	// Generate the consistent header
+	const headerHtml = header.call(this, data);
 
 	if (isIndexPage) {
 		// Sidebar layout for index page
@@ -55,16 +59,19 @@ module.exports = async function(data) {
 		<script src="/assets/is-land.js" type="module"></script>
 	</head>
 	<body>
-		<aside class="sidebar">
-			${data.sidebarContent || ''}
-		</aside>
-		<div class="main-content">
-			<main>
-				${data.content}
-			</main>
-			<footer>
-				<p>An open source project from <a href="https://github.com/tweetback">tweetback</a>.</p>
-			</footer>
+		${headerHtml}
+		<div class="page-container">
+			<aside class="sidebar">
+				${data.sidebarContent || ''}
+			</aside>
+			<div class="main-content">
+				<main>
+					${data.content}
+				</main>
+				<footer>
+					<p>An open source project from <a href="https://github.com/tweetback">tweetback</a>.</p>
+				</footer>
+			</div>
 		</div>
 	</body>
 </html>`;
@@ -90,19 +97,16 @@ module.exports = async function(data) {
 			` : ""}
 	</head>
 	<body>
-		<header>
-			<h1 class="tweets-title"><a href="/"><img src="${metadata.avatar}" width="104" height="104" alt="${data.metadata.username}'s avatar" class="tweet-avatar">${data.metadata.username}'s Twitter Archive</a>${titleTweetNumberStr}</h1>
-			${!data.hideHeaderTweetsLink ? `<ul class="tweets-nav">
-				<li><a rel="home" href="${data.metadata.homeUrl}">← ${data.metadata.homeLabel}</a></li>
-			</ul>`: ""}
-		</header>
-		<main>
-			${data.content}
-		</main>
-		${navHtml}
-		<footer>
-			<p>An open source project from <a href="https://github.com/tweetback">tweetback</a>.</p>
-		</footer>
+		${headerHtml}
+		<div class="page-container page-container-single">
+			<main>
+				${data.content}
+			</main>
+			${navHtml}
+			<footer>
+				<p>An open source project from <a href="https://github.com/tweetback">tweetback</a>.</p>
+			</footer>
+		</div>
 	</body>
 </html>`;
 };
