@@ -1,3 +1,16 @@
+/* 
+ * Tweetback Responsive Styles
+ * 
+ * Mobile-first responsive design strategy:
+ * - Base styles work on mobile (320px+)
+ * - Breakpoint at 48em (768px) for tablet/desktop layouts
+ * - Uses clamp() for fluid typography between mobile and desktop
+ * - Ensures minimum 44px touch targets for mobile usability
+ * - Prevents horizontal overflow with overflow-x: hidden
+ * - Sidebar collapses to top on mobile, sticky on desktop
+ * - Images and media scale appropriately for all viewports
+ */
+
 * {
 	box-sizing: border-box;
 }
