@@ -1,8 +1,22 @@
+/* 
+ * Tweetback Responsive Styles
+ * 
+ * Mobile-first responsive design strategy:
+ * - Base styles work on mobile (320px+)
+ * - Breakpoint at 48em (768px) for tablet/desktop layouts
+ * - Uses clamp() for fluid typography between mobile and desktop
+ * - Ensures minimum 44px touch targets for mobile usability
+ * - Prevents horizontal overflow with overflow-x: hidden
+ * - Sidebar collapses to top on mobile, sticky on desktop
+ * - Images and media scale appropriately for all viewports
+ */
+
 * {
 	box-sizing: border-box;
 }
 html {
 	height: 100%;
+	overflow-x: hidden; /* Prevent horizontal scroll */
 }
 body {
 	min-height: 100%;
@@ -11,6 +25,7 @@ body {
 	padding: 0;
 	display: flex;
 	flex-direction: row;
+	overflow-x: hidden; /* Prevent horizontal scroll */
 }
 @media (max-width: 48em) { /* 768px */
 	body {
@@ -45,8 +60,10 @@ body {
 .main-content {
 	flex: 1;
 	overflow-y: auto;
+	overflow-x: hidden; /* Prevent horizontal scroll */
 	padding: 1rem 2rem;
 	max-width: 60em;
+	width: 100%;
 }
 @media (max-width: 48em) { /* 768px */
 	.main-content {
@@ -108,6 +125,24 @@ body {
 .sidebar .sidebar-pagination a:hover {
 	background-color: #e0e0e0;
 }
+
+/* Header and Footer */
+header {
+	padding: 1rem 0;
+	margin-bottom: 1rem;
+}
+@media (max-width: 48em) { /* 768px */
+	header {
+		padding: 0.5rem 0;
+	}
+	header h1.tweets-title {
+		font-size: 0.9em;
+	}
+	header h1.tweets-title img.tweet-avatar {
+		width: 40px;
+		height: 40px;
+	}
+}
 footer {
 	font-size: 0.875em; /* 14px /16 */
 	margin-top: 2em;
@@ -135,9 +170,50 @@ footer {
 input,
 button {
 	font-size: inherit;
+	min-height: 44px; /* Minimum touch target size for mobile */
+	padding: 0.5em 0.75em;
 }
 button {
 	border-radius: 0.2em; /* 4px /20 */
+}
+a {
+	/* Ensure links have adequate touch targets on mobile */
+	display: inline-block;
+	min-height: 24px;
+	line-height: 1.5;
+}
+/* Code blocks */
+code, pre {
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	word-break: break-word;
+	white-space: pre-wrap;
+}
+pre {
+	overflow-x: auto;
+	max-width: 100%;
+}
+/* Responsive tables and lists */
+ol, ul {
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+@media (max-width: 48em) { /* 768px */
+	ol, ul {
+		padding-left: 1.5em;
+	}
+	h1 {
+		font-size: 1.5em;
+	}
+	h2 {
+		font-size: 1.3em;
+	}
+	h3 {
+		font-size: 1.1em;
+	}
+	h4 {
+		font-size: 1em;
+	}
 }
 
 /* Flex lib */
@@ -152,6 +228,12 @@ button {
   margin-top: calc(-1 * var(--lo-margin-v, 0));
   margin-left: calc(-1 * var(--lo-margin-h, 0));
 }
+@media (max-width: 48em) { /* 768px */
+	.lo {
+		--lo-margin-h: 0.5em;
+		--lo-margin-v: 0.5em;
+	}
+}
 .lo-c {
   /* if a margin is in play, account for this in our stackpoint calculations */
   /* notably this will also work if a stackpoint is not used. */
@@ -163,6 +245,12 @@ button {
   margin: 0;
   margin-top: var(--lo-margin-v, 0);
   margin-left: var(--lo-margin-h, 0);
+  min-width: 0; /* Prevent flex item overflow */
+}
+@media (max-width: 48em) { /* 768px */
+	.lo-c {
+		flex-basis: 100%; /* Stack on mobile */
+	}
 }
 .lo-inline > .lo-c {
   flex-grow: 0;
@@ -171,6 +259,12 @@ button {
 .lo-cols {
 	column-gap: 10vw;
 	column-width: var(--lo-basis, 20em);
+}
+@media (max-width: 48em) { /* 768px */
+	.lo-cols {
+		column-width: 100%; /* Single column on mobile */
+		column-gap: 0;
+	}
 }
 .lo-cols .tweet {
 	break-inside: avoid;
@@ -193,14 +287,33 @@ button {
 }
 .tweets-nav li {
 	display: inline-block;
+	margin-right: 0.5em;
+	margin-bottom: 0.5em;
+}
+.tweets-nav li a,
+.tweets-nav li span {
+	display: inline-block;
+	padding: 0.5em 0.75em;
+	min-height: 44px; /* Touch target size */
+	line-height: 1.4;
+}
+@media (max-width: 48em) { /* 768px */
+	.tweets-nav li {
+		display: block;
+		margin-bottom: 0.75em;
+	}
 }
 @media (min-width: 48em) { /* 768px */
 	.tweets-nav {
 		float: right;
 	}
+	.tweets-nav li {
+		display: inline-block;
+		margin-bottom: 0;
+	}
 }
 .tweets-primary-count {
-	font-size: 4em;
+	font-size: clamp(2em, 5vw, 4em); /* Responsive: 2em mobile to 4em desktop */
 	margin: 0.5em 0 0.5em;
 	padding: 0 0 0.5em;
 	text-align: center;
@@ -217,6 +330,11 @@ button {
 	margin: 2em auto;
 	padding: 0;
 }
+@media (max-width: 48em) { /* 768px */
+	.tweets {
+		margin: 1em 0;
+	}
+}
 .tweets .tweets-replies {
 	padding-left: 1em;
 	border-left: 2px solid rgba(0,0,0,0.1);
@@ -230,10 +348,22 @@ button {
 	margin-top: 15vh;
 	margin-bottom: 15vh;
 }
+@media (max-width: 48em) { /* 768px */
+	.tweets-thread {
+		margin-top: 5vh;
+		margin-bottom: 5vh;
+	}
+}
 .tweets-linear-list .tweet {
 	margin-bottom: 3.5rem;
 	padding-bottom: 3.5rem;
 	border-bottom: 1px solid #ccc;
+}
+@media (max-width: 48em) { /* 768px */
+	.tweets-linear-list .tweet {
+		margin-bottom: 2rem;
+		padding-bottom: 2rem;
+	}
 }
 
 /* Individual tweet */
@@ -280,14 +410,19 @@ button {
 
 /* Individual tweet */
 .tweet {
-	font-size: 1.625em; /* 26px /16 */
+	font-size: clamp(1.125em, 2vw, 1.625em); /* Responsive: 18px mobile to 26px desktop */
 	margin: 0 0 3.5rem;
 	padding: 0;
 	list-style: none;
 }
 .tweet.is_reply,
 .tweet.is_retweet {
-	font-size: 1.375em; /* 22px /16 */
+	font-size: clamp(1em, 1.8vw, 1.375em); /* Responsive: 16px mobile to 22px desktop */
+}
+@media (max-width: 48em) { /* 768px */
+	.tweet {
+		margin: 0 0 2rem;
+	}
 }
 .tweet-next .tweet-text,
 .tweet-previous .tweet-text {
@@ -318,11 +453,22 @@ h1 .tweet-avatar {
 	margin: 1em 0 0;
 	max-height: 10em;
 	gap: .5em;
+	flex-wrap: wrap; /* Allow wrapping on small screens */
 }
 .tweet-medias > a {
 	display: block;
 	flex-basis: 12em;
 	flex-grow: 0.5;
+	min-width: 0; /* Prevent flex item overflow */
+}
+@media (max-width: 48em) { /* 768px */
+	.tweet-medias {
+		max-height: 15em; /* More height for wrapped items */
+	}
+	.tweet-medias > a {
+		flex-basis: 100%; /* Full width on mobile */
+		max-width: 100%;
+	}
 }
 .tweet-media {
 	border-radius: .25em;
@@ -459,4 +605,43 @@ img.tweet-media-og {
 	margin: 0 auto;
 	max-width: 40rem; /* 640px /16 */
 	font-size: 1.25em; /* 20px /16 */
+}
+
+/* Pagination */
+.tweets-pagination {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	margin: 2rem 0;
+	flex-wrap: wrap;
+}
+.tweets-pagination a,
+.tweets-pagination span {
+	display: inline-block;
+	padding: 0.75em 1em;
+	min-height: 44px;
+	line-height: 1.4;
+	text-decoration: none;
+	border: 1px solid #ddd;
+	border-radius: 0.3em;
+	background-color: #f5f5f5;
+}
+.tweets-pagination a:hover {
+	background-color: #e0e0e0;
+	border-color: #999;
+}
+.tweets-pagination span {
+	color: #999;
+	cursor: not-allowed;
+}
+@media (max-width: 48em) { /* 768px */
+	.tweets-pagination {
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.tweets-pagination a,
+	.tweets-pagination span {
+		width: 100%;
+		text-align: center;
+	}
 }
