@@ -7,7 +7,8 @@ const dataSource = require("./src/DataSource");
 class Index extends Twitter {
 	data() {
 		return {
-			layout: "layout.11ty.js"
+			layout: "layout.11ty.js",
+			sidebarContent: "" // Will be populated in render
 		};
 	}
 
@@ -258,24 +259,70 @@ class Index extends Twitter {
 		let links12Months = this.getAllLinks(last12MonthsTweets);
 		let linksCount12Months = links12Months.length;
 		let httpsLinksCount12Months = links12Months.filter(entry => entry.origin.startsWith("https:")).length;
+
+// Build sidebar content
+data.sidebarContent = `
+<div class="sidebar-section">
+<h1 class="tweets-title">
+<a href="/">
+<img src="${metadata.avatar}" width="52" height="52" alt="${metadata.username}'s avatar" class="tweet-avatar">
+${metadata.username}'s Twitter Archive
+</a>
+</h1>
+</div>
+
+<div class="sidebar-section">
+<is-land on:visible on:save-data="false">
+<template data-island>
+<h2>Search Tweets</h2>
+<div class="tweets-search">
+<div id="search" class="tweets-search"></div>
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="/pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#search', showImages: false, processResult: function (result) {
+  result.url = '/twitter/' + result.url;
+                      return result;
+} });"></script>
+</div>
+</template>
+</is-land>
+</div>
+
+<div class="sidebar-section">
+<h2>Navigation</h2>
+<ul class="tweets-nav">
+<li><a rel="home" href="${metadata.homeUrl}">← ${metadata.homeLabel}</a></li>
+<li><a href="/recent/">Recent Tweets</a></li>
+<li><a href="/popular/">Popular Tweets</a></li>
+</ul>
+</div>
+
+<div class="sidebar-section">
+<h2>Statistics</h2>
+<ul style="list-style: none; padding: 0; font-size: 0.9em;">
+<li><strong>${this.renderNumber(tweetCount)}</strong> total tweets</li>
+<li><strong>${this.renderPercentage(retweetCount, tweetCount)}</strong> retweets</li>
+<li><strong>${this.renderPercentage(replyCount, tweetCount)}</strong> replies</li>
+<li><strong><span class="tag tag-lite tag-retweet">♻️ ${this.renderNumber(retweetsEarnedCount)}</span></strong> earned</li>
+<li><strong><span class="tag tag-lite tag-favorite">❤️ ${this.renderNumber(likesEarnedCount)}</span></strong> earned</li>
+</ul>
+</div>
+
+<div class="sidebar-section">
+<h2>Quick Links</h2>
+<ul style="list-style: none; padding: 0; font-size: 0.9em;">
+<li><a href="#retweets">Retweets</a></li>
+<li><a href="#replies">Replies & Mentions</a></li>
+<li><a href="#links">Most Linked Sites</a></li>
+<li><a href="#emoji">Top Emoji</a></li>
+<li><a href="#hashtags">Top Hashtags</a></li>
+<li><a href="#swears">Top Swear Words</a></li>
+</ul>
+</div>
+`;
 		return `
 		<h2 class="tweets-primary-count">
 			<span class="tweets-primary-count-num">${this.renderNumber(tweetCount)}</span> tweet${tweetCount !== 1 ? "s" : ""}
 		</h2>
-
-		<is-land on:visible on:save-data="false">
-			<template data-island>
-				<h2>Search Tweets:</h2>
-				<div class="tweets-search">
-					<div id="search" class="tweets-search"></div>
-					<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
-					<script src="/pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#search', showImages: false, processResult: function (result) {
-					  result.url = '/twitter/' + result.url;
-                      return result;
-					} });"></script>
-				</div>
-			</template>
-		</is-land>
 
 		<div>
 			<h2><a href="/recent/">Recent:</a></h2>
