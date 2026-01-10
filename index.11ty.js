@@ -304,6 +304,16 @@ ${Array.from({length: 25}, (_, i) => {
 }).join(' ')}
 </div>
 </div>
+<div style="margin-top: 1rem;">
+<strong style="font-size: 0.9em; display: block; margin-bottom: 0.5rem;">Browse most popular tweets:</strong>
+<div class="sidebar-pagination">
+${Array.from({length: 10}, (_, i) => {
+	let pageNum = i + 1;
+	let url = pageNum === 1 ? '/popular/' : `/popular/${pageNum}/`;
+	return `<a href="${url}">${pageNum}</a>`;
+}).join(' ')}
+</div>
+</div>
 </div>
 
 <div class="sidebar-section">
