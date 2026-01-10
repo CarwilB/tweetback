@@ -38,9 +38,11 @@ module.exports = async function(data) {
 
 	// Check if this is the index page and should use sidebar layout
 	const isIndexPage = data.page.url === "/" || data.page.fileSlug === "index.11ty" || data.page.fileSlug === "index";
+	const isRecentPage = data.page.fileSlug === "recent";
+	const isTweetPage = data.page.fileSlug === "tweet-pages";
 
-	if (isIndexPage) {
-		// Sidebar layout for index page
+	if (isIndexPage || isRecentPage) {
+		// Sidebar layout for index page and recent pages
 		return `<!doctype html>
 <html lang="en">
 	<head>
@@ -62,6 +64,38 @@ module.exports = async function(data) {
 			<main>
 				${data.content}
 			</main>
+			<footer>
+				<p>An open source project from <a href="https://github.com/tweetback">tweetback</a>.</p>
+			</footer>
+		</div>
+	</body>
+</html>`;
+	}
+
+	// Wide-column layout for individual tweet pages
+	if (isTweetPage) {
+		return `<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>${data.metadata.username}'s Twitter Archive${titleTweetNumberStr}</title>
+		<meta name="description" content="${meta_description}" />
+
+		<link rel="profile" href="https://microformats.org/profile/hatom">
+		<link rel="stylesheet" href="/assets/style.css">
+		<script src="/assets/script.js" type="module"></script>
+		<script src="/assets/is-land.js" type="module"></script>
+	</head>
+	<body class="tweet-page-body">
+		<div class="tweet-page-container">
+			<header class="tweet-page-header">
+				<h1 class="tweets-title"><a href="/"><img src="${metadata.avatar}" width="104" height="104" alt="${data.metadata.username}'s avatar" class="tweet-avatar">${data.metadata.username}'s Twitter Archive</a>${titleTweetNumberStr}</h1>
+			</header>
+			<main class="tweet-page-main">
+				${data.content}
+			</main>
+			${navHtml}
 			<footer>
 				<p>An open source project from <a href="https://github.com/tweetback">tweetback</a>.</p>
 			</footer>
