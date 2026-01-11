@@ -39,9 +39,10 @@ module.exports = async function(data) {
 	// Check if this is the index page and should use sidebar layout
 	const isIndexPage = data.page.url === "/" || data.page.fileSlug === "index.11ty" || data.page.fileSlug === "index";
 	const isRecentPage = data.page.fileSlug === "recent";
+    const isPopularPage = data.page.fileSlug === "popular";
 	const isTweetPage = data.page.fileSlug === "tweet-pages";
 
-	if (isIndexPage || isRecentPage) {
+	if (isIndexPage || isRecentPage || isPopularPage ) {
 		// Sidebar layout for index page and recent pages
 		return `<!doctype html>
 <html lang="en">

@@ -239,6 +239,11 @@ button {
 	margin-bottom: 3.5rem;
 	padding-bottom: 3.5rem;
 	border-bottom: 1px solid #ccc;
+	font-size: 1.25em; /* 20px /16 - smaller than default 1.625em (26px) for index pages */
+}
+.tweets-linear-list .tweet.is_reply,
+.tweets-linear-list .tweet.is_retweet {
+	font-size: 1.125em; /* 18px /16 - smaller than default 1.375em (22px) for index pages */
 }
 
 /* Individual tweet */
